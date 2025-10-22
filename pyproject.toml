@@ -1,0 +1,22 @@
+[project]
+name = "writermd"
+version = "0.1.0"
+description = "A utility project to aid writters organise and generate manuscripts from markdown files"
+authors = [
+    { name = "Lydie Toure", email = "lammtoure@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "gitpython>=3.1.45",
+    "pandoc>=2.4",
+    "pyyaml>=6.0.3",
+    "typer>=0.20.0",
+]
+
+[project.scripts]
+writermd = "writermd.cli.app:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
