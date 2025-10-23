@@ -26,9 +26,14 @@ If you want to use this template, you can simply download the template directory
     + Add chapters into the `chapters` folder
     + Modify the files in the `publish` folder to suit (only relevant if you are using the application; see the files there for guidance, and the [usage section](#usage) below).
 
-Markdown is a very simple, minimal markup language that is very easy to use. There are many available applications to work with Markdown files, including:
+Markdown is a very simple, minimal markup language that is very easy to use. The simplest way to work with this project is by using a very simple text editor (even good old Notepad will do!). But there are also some specialised applications for it, including:
 - [Visual Studio Code](https://code.visualstudio.com/) with the [Markdown All in One extension](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
-- [Obsidian](https://obsidian.md/) is a very elegant editor, with a number of plugins to help you write a great many things. Check out [the longform plugin for Obsidian](https://github.com/kevboh/longform) if you want to get started right now.
+- [Obsidian](https://obsidian.md/) is a very elegant editor, with a number of plugins to help you write a great many things. Check out [the longform plugin for Obsidian](https://github.com/kevboh/longform) if you would prefer a graphical interface to manage your book project with Obsidian.
+- [Joplin](https://joplinapp.org/) is another great Markdown editor that can help you manage your writing projects.
+- [Microsoft.Edit](https://github.com/microsoft/edit) is a terminal-based text editor, if you prefer working in the terminal.
+- [QuickEdit](https://quickedit.io/) is a text editor for Android devices, if you want to write on the go.
+
+I prefer Visual Studio Code, since this project is CLI-based, and VS Code has a great terminal built in.
 
 ### Using the writermd tool
 If you are looking for a more complete solution, then you should download the writermd tool from [the release page]() to get started.
