@@ -43,6 +43,10 @@ Prerequisites:
 - A Gitlab or GitHub account to host your book project (optional, but recommended). If you do not want to host, you can just use the tool locally.
 - The writermd tool itself.
 
+There are some interesting things you can do with the writermd tool, including:
+- Create a new project with the necessary structure and files.
+- Keep track of all your writermd projects with the `writermd config` subcommand.
+
 ## Usage
 
 You can begin a new project by running the following command in your terminal, in the directory where you want to create your book project:
@@ -92,7 +96,7 @@ writermd export --format epub
 The `--rename` option can be used to specify a custom name for the output file. By default, the output file will be named after your book title, with the date prefixed. For example, if your book title is "My Book" and you export it on January 1, 2023, the output file will be named `20230101-my-book.epub` in the `drafts` directory
 
 
-## Configuration
+## WriterMD Project File
 
 The `writermd.yml` file contains various settings that you can customize for your book project. Here are some of the key settings:
 
