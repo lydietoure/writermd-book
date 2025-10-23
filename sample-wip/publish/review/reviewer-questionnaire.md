@@ -1,6 +1,6 @@
 # Questionnaire
 
-You have been chosen as a reader of an early draft of *BOOK NAME*
+You have been chosen as a reader of an early draft of $WIP_TITLE.
 
 Please answer the following questions, adding in as much information as possible. Ideally you will give locations in the book to relate to your answers.
 

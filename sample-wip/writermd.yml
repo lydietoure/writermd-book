@@ -1,23 +1,24 @@
 # Configuration file for the Publish.py script
 
 #  General params
-book-name: your-book
-ext: .md
+name: your-book
+author: Your Name
+
+# Directories
+draftDir: draft
+publishDir: publish
+sourceDir: chapters
 
 # epub
 epub-frontmatter: epub-frontmatter.md
 epub-endmatter: epub-endmatter.md
-epub-ext: .epub
 
-#  web
-draftDir: draft
+# web
 webLocation: "where you publish your book to locally"
 web-frontmatter: web-frontmatter.md
 web-endmatter: web-endmatter.md
-firstFile: prologue
-fileNameBase: chapter
-endmatter-title: "Read More..."
+# firstFile: prologue
+# fileNameBase: chapter
+# endmatter-title: "Read More..."
 
-#  Do not change!
-publishDir: publish
-sourceDir: chapters
+
