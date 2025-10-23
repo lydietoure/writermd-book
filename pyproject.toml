@@ -16,6 +16,7 @@ dependencies = [
 
 [project.scripts]
 writermd = "writermd.cli.app:main"
+writermd-tui = "writermd.tui:main"
 
 [build-system]
 requires = ["hatchling"]
