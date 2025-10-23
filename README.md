@@ -7,8 +7,8 @@
 
 :keyboard: The writermd tool is a command line utility written in Python that helps you manage and export your book project into various ebook formats.
 
-<!-- manages the creation of books in a logical manner. -->
-
+To write your book, you can either use the template directory directly, or you can use the writermd tool to create a new book project with the necessary structure and files.
+Either way, you would be working with Markdown files to write your pages (extension `.md`), and Git to manage your project versions.
 
 Simple.
 
@@ -16,14 +16,29 @@ Simple.
 
 If you want to use this template, you can simply download the template directory and start from there. You do not need to use the writermd tool until you are ready.
 
+### Using the template
+
+- Add chapters in the `chapters` directory
+- Add cover art and save as `images/book-cover.jpg`
+- Put all your planning stuff into planning
+- Write away...
+    + Add a synopsis set into the `synopsis` folder
+    + Add chapters into the `chapters` folder
+    + Modify the files in the `publish` folder to suit (only relevant if you are using the application; see the files there for guidance, and the [usage section](#usage) below).
+
+Markdown is a very simple, minimal markup language that is very easy to use. There are many available applications to work with Markdown files, including:
+- [Visual Studio Code](https://code.visualstudio.com/) with the [Markdown All in One extension](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+- [Obsidian](https://obsidian.md/) is a very elegant editor, with a number of plugins to help you write a great many things. Check out [the longform plugin for Obsidian](https://github.com/kevboh/longform) if you want to get started right now.
+
+### Using the writermd tool
 If you are looking for a more complete solution, then you should download the writermd tool from [the release page]() to get started.
 
-### Pre-requisites
+Prerequisites:
 - Git installed on your machine. You can install it from [here](https://git-scm.com/). Git is the version control system used to manage your book project. This will enable you to track changes and different versions of your book, as well as collaborate with others if needed.
 - A Gitlab or GitHub account to host your book project (optional, but recommended). If you do not want to host, you can just use the tool locally.
 - The writermd tool itself.
 
-### Usage
+## Usage
 
 You can begin a new project by running the following command in your terminal, in the directory where you want to create your book project:
 
@@ -91,13 +106,7 @@ Then clone this repo to your machine. `git clone https://github.com/avastmick/bo
 
 :boom: Boom, you're done!
 
-- Add chapters in the `chapters` directory
-- Add cover art and save as `images/book-cover.jpg`
-- Put all your planning stuff into planning
-- Write away...
-    + Add a synopsis set into the `synopsis` folder
-    + Add chapters into the `chapters` folder
-    + Modify the files in the `publish` folder to suit (see the files there for guidance)
+
 
 ## Use locally
 
@@ -119,7 +128,7 @@ I use [Gitlab](http://gitlab.com), why? It has free private repositories, you wa
 - Commit your changes and push up to [Gitlab](http://gitlab.com)
 - Set up a pipeline for building your
 - Check the pipeline for success
-- Download the build artefacts 
+- Download the build artefacts
 - Read...
 
 ## Using GitHub
@@ -127,5 +136,3 @@ I use [Gitlab](http://gitlab.com), why? It has free private repositories, you wa
 GitHub is great if you are writing open source books etc. It has more users and a greater potential readership.
 
 I'll post up some information on how this template will work.
-
-
