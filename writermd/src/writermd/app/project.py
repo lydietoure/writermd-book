@@ -10,7 +10,7 @@ CONFIG_FILE_NAME = "writermd.yaml"
 
 
 @dataclass
-class WriterMDConfig:
+class WriterMDProject:
     """Configuration for a WriterMD project."""
     name: str
     publishDir: str = "publish"
@@ -26,11 +26,11 @@ class WriterMDConfig:
     web_frontmatter: str = "web-frontmatter.md"
     web_endmatter: str = "web-endmatter.md"
 
-writermd_config: Optional[WriterMDConfig] = None
-    
-def load_config(config_path: Path) -> WriterMDConfig:
+writermd_config: Optional[WriterMDProject] = None
+
+def load_project(config_path: Path) -> WriterMDProject:
     """Loads the WriterMD configuration from a YAML file.
-    
+
     :param config_path: Path to the configuration YAML file.
     :return: WriterMDConfig object with the loaded configuration.
     """
@@ -38,13 +38,13 @@ def load_config(config_path: Path) -> WriterMDConfig:
 
     with open(config_path, "r") as f:
         config_data = yaml.safe_load(f)
-    
-    writermd_config = WriterMDConfig(**config_data)
+
+    writermd_config = WriterMDProject(**config_data)
     return writermd_config
 
 def write_config(config_path: Path):
-    """Writes the WriterMD configuration to a YAML file.
-    
+    """Writes the WriterMD project to a YAML file.
+
     :param config: WriterMDConfig object to write.
     :param config_path: Path to the configuration YAML file.
     """
@@ -54,9 +54,9 @@ def write_config(config_path: Path):
     with open(config_path, "w") as f:
         yaml.safe_dump(asdict(writermd_config), f)
 
-def get_config() -> WriterMDConfig:
+def get_project() -> WriterMDProject:
     """Gets the currently loaded WriterMD configuration.
-    
+
     :return: WriterMDConfig object.
     :raises WriterMDError: If the configuration has not been loaded yet.
     """
@@ -66,7 +66,7 @@ def get_config() -> WriterMDConfig:
 
 def validate_project_structure(project_path: Path):
     """Validates that the given path contains a valid WriterMD project structure.
-    
+
     :param project_path: Path to the project directory.
     :return: WriterMDConfig object if the structure is valid.
     :raises FileNotFoundError: If the configuration file is not found.
@@ -75,8 +75,8 @@ def validate_project_structure(project_path: Path):
     config_path = project_path / "writermd.yaml"
     if not config_path.exists():
         raise FileNotFoundError(f"Configuration file not found at {config_path}")
-    
+
     try:
-        return load_config(config_path)
+        return load_project(config_path)
     except Exception as e:
         raise WriterMDError(f"Invalid configuration file: {e}")

@@ -4,10 +4,10 @@ import typer
 from pathlib import Path
 from typing import Annotated, Optional, List 
 
-from writermd.config import (
-    SAMPLE_WIP_PATH, CONFIG_FILE_NAME, 
+from writermd.src.writermd.app.project import (
+    SAMPLE_WIP_PATH, CONFIG_FILE_NAME,
     validate_project_structure,
-    load_config, write_config
+    load_project, write_config
 )
 import shutil
 
@@ -75,7 +75,7 @@ def _create_directory_structure(project_name: str, path: Path):
 
     # Edit the config file to set the project name
     config_yaml = destination / CONFIG_FILE_NAME
-    config = load_config(config_yaml)
+    config = load_project(config_yaml)
     config.name = project_name
 
     write_config(config_yaml)
