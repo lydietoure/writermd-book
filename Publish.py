@@ -22,11 +22,11 @@ def publish():
                 rename(join(dirname, filename),join(cfg['webLocation'],filename))
                 print("Published to web: "+join(cfg['webLocation'],filename))
             elif filename.endswith('.epub'):
-                rename(join(dirname, filename),join(cfg['webLocation'],cfg['book-name']+".epub")) 
+                rename(join(dirname, filename),join(cfg['webLocation'],cfg['book-name']+".epub"))
                 print("Published to web: "+join(cfg['webLocation'],cfg['book-name']+".epub"))
             elif filename.endswith('.mobi'):
-                rename(join(dirname, filename),join(cfg['webLocation'],cfg['book-name']+".mobi")) 
-                print("Published to web: "+join(cfg['webLocation'],cfg['book-name']+".mobi"))    
+                rename(join(dirname, filename),join(cfg['webLocation'],cfg['book-name']+".mobi"))
+                print("Published to web: "+join(cfg['webLocation'],cfg['book-name']+".mobi"))
 
 def mobi(_chapters):
     print("Output to mobi (Kindle) format, number of chapters: "+_chapters)
@@ -51,7 +51,7 @@ def mobi(_chapters):
         print("Kindlegen not found or not functioning. Is it installed?")
         exit(-1)
     print("...done.")
-    print("Published book as .mobi")    
+    print("Published book as .mobi")
 
 def epub(_chapters):
     print("Output to epub format, number of chapters: "+_chapters)
@@ -62,19 +62,19 @@ def epub(_chapters):
 
     for dirname, dirnames, filenames in walk(cfg['sourceDir']):
         for counter, filename in enumerate(filenames):
-            if _chapters != 'all': 
+            if _chapters != 'all':
                 if int(counter) == int(_chapters):
                     break
             fileList += [(join(dirname, filename))]
 
     fileList += [join(cfg['publishDir'],cfg['epub-endmatter'])]
 
-    print "Publishing as epub the following: "+' '.join(fileList)
+    print("Publishing as epub the following: "+' '.join(fileList))
 
     date = datetime.date.today()
     fileName = join(cfg['draftDir'],cfg['book-name']+'-draft-'+str(date)+'.epub ')
 
-    args = 'pandoc -S --toc-depth=1 -o '+fileName+' '+' '.join(fileList)
+    args = f"pandoc -S --toc-depth=1 -o {fileName} {' '.join(fileList)}"
     try:
         call(args.split())
     except:
@@ -114,18 +114,18 @@ def web(_chapters):
     fileList = []
     for dirname, dirnames, filenames in walk(cfg['sourceDir']):
         for filename in filenames:
-            fileList += [(join(dirname, filename))] 
+            fileList += [(join(dirname, filename))]
 
     # Trim according to num chapters
     if _chapters != 'all':
         fileList = fileList[firstChapt:lastChapt+1]
 
-    print "Publishing to web location the following: "+str(fileList) 
+    print("Publishing to web location the following: "+str(fileList))
     # Loop over files to be created
     filecount = firstChapt
     for filename in fileList:
         chapter = ""
-        # overwrite values in frontmatter str 
+        # overwrite values in frontmatter str
         fm = Template(str(frontmatter))
         if filecount == 0:
             chapter = fm.substitute(FILENAME=cfg['firstFile'], TIMESTAMP='00:0'+str(filecount+1)+':0'+str(filecount+1))
@@ -133,9 +133,9 @@ def web(_chapters):
             chapter = fm.substitute(FILENAME=cfg['fileNameBase']+' '+str(filecount), TIMESTAMP='00:0'+str(filecount+1)+':0'+str(filecount+1))
         # concat
         with open(filename, 'r') as chaptfile:
-            chapter += chaptfile.read()  
+            chapter += chaptfile.read()
             chaptfile.close()
-        # TODO: Fix horrible hack - write out chapter file 
+        # TODO: Fix horrible hack - write out chapter file
         chaptname = ""
         if filecount == 0:
             chaptname = cfg['firstFile']+cfg['ext']
@@ -153,14 +153,14 @@ def web(_chapters):
     # Add end matter chapter
     chapter = fm.substitute(FILENAME=cfg['endmatter-title'], TIMESTAMP='00:0'+str(filecount+1)+':0'+str(filecount+1))
     with open(join(cfg['publishDir'],cfg['web-endmatter']), 'r') as chaptfile:
-        chapter += chaptfile.read() 
+        chapter += chaptfile.read()
         chaptfile.close()
     # write out chapter file
     chaptfileStr = join(cfg['draftDir'],cfg['fileNameBase']+'-'+str(filecount)+cfg['ext'])
     chaptfile = open(chaptfileStr, "w")
     chaptfile.write(chapter)
     chaptfile.close()
-    
+
     publish()
 
 def word(_chapters):
@@ -203,5 +203,5 @@ if __name__ == '__main__':
         loadConfig()
         word(args.chapters)
     elif args.format == "web":
-        loadConfig()        
+        loadConfig()
         web(args.chapters)
