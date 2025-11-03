@@ -10,15 +10,13 @@ publishDir: publish
 sourceDir: chapters
 
 # epub
-epub-frontmatter: epub-frontmatter.md
-epub-endmatter: epub-endmatter.md
+epubFrontmatter: epub-frontmatter.md
+epubEndmatter: epub-endmatter.md
 
 # web
 webLocation: "where you publish your book to locally"
-web-frontmatter: web-frontmatter.md
-web-endmatter: web-endmatter.md
+webFrontmatter: web-frontmatter.md
+webEndmatter: web-endmatter.md
 # firstFile: prologue
 # fileNameBase: chapter
 # endmatter-title: "Read More..."
-
-

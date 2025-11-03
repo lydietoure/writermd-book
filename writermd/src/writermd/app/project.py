@@ -1,32 +1,45 @@
-from typing import Optional
+import importlib.resources
 import yaml
+import shutil
+from typing import Optional
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
 from writermd.exceptions import WriterMDError
 
-SAMPLE_WIP_PATH = Path(__file__).parent.parent / "sample-wip"
-CONFIG_FILE_NAME = "writermd.yaml"
-
+SAMPLE_WIP_PATH = Path(__file__).parent.parent.parent.parent / "wip-template"
+CONFIG_FILE_NAME = "writermd.yml"
+DEFAULT_SOURCES_DIR = "chapters"
 
 @dataclass
 class WriterMDProject:
     """Configuration for a WriterMD project."""
     name: str
+    author: str
     publishDir: str = "publish"
-    draftsDir: str = "drafts"
+    draftDir: str = "drafts"
     sourceDir: str = "chapters"
 
     # epub specific settings: located under publish
-    epub_frontmatter: str = "epub-frontmatter.md"
-    epub_endmatter: str = "epub-endmatter.md"
+    epubFrontmatter: str = "epub-frontmatter.md"
+    epubEndmatter: str = "epub-endmatter.md"
 
     # web specific settings: located under publish
-    web_location: str = ""
-    web_frontmatter: str = "web-frontmatter.md"
-    web_endmatter: str = "web-endmatter.md"
+    webLocation: str = ""
+    webFrontmatter: str = "web-frontmatter.md"
+    webEndmatter: str = "web-endmatter.md"
 
 writermd_config: Optional[WriterMDProject] = None
+
+def get_wip_template_path() -> Path:
+    try:
+        # For installed packages, use importlib.resources to get the package data
+        with importlib.resources.path("writermd.data", "wip-template") as p:
+            return p
+    except (FileNotFoundError, ImportError):
+        # Fallback to relative path if not installed as a package
+        return Path(__file__).parent.parent.parent.parent.parent / "wip-template"
+
 
 def load_project(config_path: Path) -> WriterMDProject:
     """Loads the WriterMD configuration from a YAML file.
@@ -80,3 +93,33 @@ def validate_project_structure(project_path: Path):
         return load_project(config_path)
     except Exception as e:
         raise WriterMDError(f"Invalid configuration file: {e}")
+
+def create_sample_project(name: str, path: Path, sources_dir: Optional[str] = None, template_path: Path|str = None):
+    """Creates a sample WriterMD project structure.
+
+    :param name: Name of the project.
+    :param path: Path where the project should be created.
+    :param sources_dir: Optional custom sources directory name.
+    """
+
+    if not template_path or not Path(template_path).is_dir():
+        template_path = get_wip_template_path()
+    else:
+        template_path = Path(template_path)
+
+    print("Creating new WriterMD project at:", path)
+
+    # Copy the sample WIP structure to the new project directory
+    destination = path
+    shutil.copytree(template_path, path)
+
+    # Rename sources directory if specified
+    if sources_dir:
+        (destination / DEFAULT_SOURCES_DIR).rename(destination / sources_dir)
+
+    # Edit the config file to set the project name
+    config_yaml = destination / CONFIG_FILE_NAME
+    config = load_project(config_yaml)
+    config.name = name
+
+    write_config(config_yaml)
