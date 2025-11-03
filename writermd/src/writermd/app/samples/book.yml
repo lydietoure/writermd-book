@@ -1,0 +1,55 @@
+description: ""
+version: "0.0.1"
+
+config:
+  description: The configuration file for WriterMD projects.
+  name: "${project_name}"
+  author: "${author_name}"
+  sourceDir: "chapters"
+  draftDir: "draft"
+  publishDir: "publish"
+  epub-frontmatter: "epub-frontmatter.md"
+  epub-endmatter: "epub-endmatter.md"
+
+structure:
+  name: root
+  files:
+    - name: "writermd.yaml"
+      description: "Project configuration"
+      content: |
+        #  General params
+        name: your-book
+        author: Your Name
+
+        # Directories
+        draftDir: draft
+        publishDir: publish
+        sourceDir: chapters
+
+        # epub
+        epub-frontmatter: epub-frontmatter.md
+        epub-endmatter: epub-endmatter.md
+
+        # web
+        webLocation: "where you publish your book to locally"
+        web-frontmatter: web-frontmatter.md
+        web-endmatter: web-endmatter.md
+      variables:
+        project_name: "your-book"
+        author_name: "Your Name"
+      is_required: true
+
+    - name: "readme.md"
+      description: "Documentation for the project"
+      content: |
+        # ${project_name}
+        by ${author_name}
+      variables:
+        project_name: "your-book"
+        author_name: "Your Name"
+      is_required: true
+  subdirectories:
+    - name: "chapters"
+      description: "Directory for chapter source files"
+      is_required: true
+      
