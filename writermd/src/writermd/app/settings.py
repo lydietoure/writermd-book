@@ -3,12 +3,17 @@
 import yaml
 import platformdirs
 from pathlib import Path
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from typing import List, Optional, Set
 
 APPLICATION_SETTINGS_FILE_NAME = "writermd-config.yaml"
 
-from writermd.app.project import validate_project_structure, WriterMDProject
+from writermd.app.project import load_project, validate_project_structure, WriterMDProject
+
+EDITABLE_SETTINGS = {
+    "author",
+    "email",
+}
 
 @dataclass
 class ApplicationSettings:
@@ -16,7 +21,16 @@ class ApplicationSettings:
     author: str = ""
     email: str = ""
 
+    # Paths to directories containing WriterMD projects
     projects: Set[Path] = field(default_factory=set)
+
+    def as_dict(self):
+        d = asdict(self)
+        d["projects"] = [str(p) for p in self.projects]
+
+        return d
+
+APP_SETTINGS : Optional[ApplicationSettings] = None
 
 def get_settings_file_path() -> Path:
     """Get the path to the application settings file."""
@@ -56,10 +70,15 @@ def remove_project(settings: ApplicationSettings, project_path: Path) -> None:
 
 def get_project_by_path(settings: ApplicationSettings, project_path: Path) -> Optional[WriterMDProject]:
     """Get a WriterMDProject instance by its path from the application settings."""
+    # TODO: raise rather than return None
     if project_path not in settings.projects:
         return None
 
-    return WriterMDProject.load_from_path(project_path)
+    try:
+        return validate_project_structure(project_path)
+    except (FileNotFoundError, ValueError):
+        return None
+
 
 def list_projects(settings: ApplicationSettings) -> List[WriterMDProject]:
     """List all projects in the application settings."""
@@ -68,3 +87,18 @@ def list_projects(settings: ApplicationSettings) -> List[WriterMDProject]:
         pr for p in settings.projects
         if (pr:=get_project_by_path(settings, p)) is not None
     ]
+
+def get_app_settings() -> ApplicationSettings:
+    """Get the global application settings, loading them if necessary."""
+    global APP_SETTINGS
+    if APP_SETTINGS is None:
+        APP_SETTINGS = load_application_settings()
+    return APP_SETTINGS
+
+def set_app_setting(key: str, value) -> None:
+    """Set a specific application setting and save it."""
+    settings = get_app_settings()
+    if not hasattr(settings, key):
+        raise KeyError(f"Invalid application setting key: {key}")
+    setattr(settings, key, value)
+    save_application_settings(settings)

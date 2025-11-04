@@ -29,6 +29,8 @@ class WriterMDProject:
     webFrontmatter: str = "web-frontmatter.md"
     webEndmatter: str = "web-endmatter.md"
 
+
+
 writermd_config: Optional[WriterMDProject] = None
 
 def get_wip_template_path() -> Path:
@@ -94,12 +96,14 @@ def validate_project_structure(project_path: Path):
     except Exception as e:
         raise WriterMDError(f"Invalid configuration file: {e}")
 
-def create_sample_project(name: str, path: Path, sources_dir: Optional[str] = None, template_path: Path|str = None):
+def create_sample_project(name: str, path: Path, author:str = None, sources_dir: Optional[str] = None, template_path: Path|str = None) -> WriterMDProject:
     """Creates a sample WriterMD project structure.
 
     :param name: Name of the project.
     :param path: Path where the project should be created.
     :param sources_dir: Optional custom sources directory name.
+    :param author: Author name to set in the config.
+    :param template_path: Optional path to a custom template directory.
     """
 
     if not template_path or not Path(template_path).is_dir():
@@ -121,5 +125,8 @@ def create_sample_project(name: str, path: Path, sources_dir: Optional[str] = No
     config_yaml = destination / CONFIG_FILE_NAME
     config = load_project(config_yaml)
     config.name = name
+    config.author = author
 
     write_config(config_yaml)
+
+    return config
