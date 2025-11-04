@@ -2,14 +2,13 @@
 name = "writermd"
 version = "0.1.0"
 description = "A utility project to aid writters organise and generate manuscripts from markdown files"
-authors = [
-    { name = "Lydie Toure", email = "lammtoure@gmail.com" }
-]
+authors = [{ name = "Lydie Toure", email = "lammtoure@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "gitpython>=3.1.45",
     "pandoc>=2.4",
+    "platformdirs>=4.5.0",
     "pyyaml>=6.0.3",
     "typer>=0.20.0",
 ]
@@ -18,13 +17,17 @@ dependencies = [
 writermd = "writermd.cli.app:main"
 writermd-tui = "writermd.tui:main"
 
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/writermd"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"../wip-template" = "writermd/data/wip-template"
+# "src/writermd/app/samples" = "writermd/app/samples"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
-dev = [
-    "mypy>=1.18.2",
-    "ruff>=0.14.1",
-    "types-pyyaml>=6.0.12.20250915",
-]
+dev = ["mypy>=1.18.2", "ruff>=0.14.1", "types-pyyaml>=6.0.12.20250915"]
