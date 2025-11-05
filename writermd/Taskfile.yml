@@ -15,7 +15,7 @@ tasks:
     cmd: pycrucible -e . --output dist/writermd-cli{{if eq OS "windows"}}.exe{{end}}
 
   create-tool:
-    desc: Create a uv-installed CLI tool (callable via 'uvx writermd')
+    desc: Install the tool globally
     silent: true
     deps: [build]
     cmd: uv tool install dist/writermd-*.whl
