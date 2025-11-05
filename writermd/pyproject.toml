@@ -15,7 +15,6 @@ dependencies = [
 
 [project.scripts]
 writermd = "writermd.cli.app:main"
-writermd-tui = "writermd.tui:main"
 
 
 [tool.hatch.build.targets.wheel]
@@ -23,7 +22,6 @@ packages = ["src/writermd"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "../wip-template" = "writermd/data/wip-template"
-# "src/writermd/app/samples" = "writermd/app/samples"
 
 [build-system]
 requires = ["hatchling"]
@@ -34,8 +32,8 @@ dev = [
     "mypy>=1.18.2",
     "ruff>=0.14.1",
     "types-pyyaml>=6.0.12.20250915",
-    "pycrucible"
+    # "pycrucible"
 ]
 
-[tool.pycrucible]
-entrypoint = "src/cli/app.py"
+# [tool.pycrucible]
+# entrypoint = "src/writermd/cli/app.py"
