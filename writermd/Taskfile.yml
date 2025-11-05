@@ -1,0 +1,24 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  init:
+    desc: Initialize the project
+    cmd: uv sync
+
+  export:
+    desc: Build the executable file
+    prompt:
+      - This will create an executable in the dist folder using PyCrucible (use a virtual environment). Continue?
+    silent: true
+    cmd: pycrucible -e . --output dist/writermd
+
+
+  build:
+    desc: Build the project's wheel
+    silent: true
+    cmd: uv build . --wheel -o dist/
